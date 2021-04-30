@@ -39,5 +39,3 @@ treeMethods.contains = function (target) {
 /*
  * Complexity: What is the time complexity of the above functions?
  */
-var tree1 = Tree(1)
-console.log(tree1)
