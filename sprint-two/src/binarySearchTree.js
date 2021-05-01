@@ -1,41 +1,65 @@
 var BinarySearchTree = function (value) {
-  var bst = Object.create(bstMethods);
-  bst.left = null;
-  bst.right = null;
-  bst.value = value;
-  return bst;
+  var tree = Object.create(BinarySearchTree.prototype);
+  //create initial value
+  tree.value = value;
+  tree.left = null;
+  tree.right = null;
+
+  return tree;
 };
 
-var bstMethods = {};
 
-bstMethods.addChild = function (value) {
-  // recurse right or left through children
-  if (value < this.value) {
+/*
+ * Complexity: What is the time complexity of the above functions?
+ */
+
+
+BinarySearchTree.prototype.insert = function (input) {
+  if (input < this.value) {
     if (this.left === null) {
-      this.left = BinarySearchTree(value);
+      this.left = BinarySearchTree(input);
+      return true;
     } else {
-      this.left.insert(value);
+      this.left.insert(input);
     }
-  } else if (value > this.value) {
+  } else if (input > this.value) {
     if (this.right === null) {
-      this.right = BinarySearchTree(value);
+      this.right = BinarySearchTree(input);
+      return true;
     } else {
-      this.right.insert(value);
+      this.right.insert(input);
     }
   }
+
+
+  //if value < this.value
+  //if this.left === null
+  //this.left = new BinarySearchTree(value)
+  //else
+  //this.left.insert(value);
+
+  //if value > this.value
 };
 
-bstMethods.contains = function (target) {
-  if (target === this.value) return true;
-  // recurse right or left through children
-  if (this.value > target && this.left) return this.left.contains(target);
-  if (this.value < target && this.right) return this.right.contains(target);
-  return false;
-};
+BinarySearchTree.prototype.contains = function (input) {
+  if (this.value === input) {
+    return true
+  } else if (this.right && input > this.value) {
+    return this.right.contains(input)
+  } else if (this.left && input < this.value) {
+    return this.left.contains(input)
+  } else {
+    return false
+  }
+}
 
-bstMethods.depthFirstLog = function (callback) {
+
+BinarySearchTree.prototype.depthFirstLog = function (callback) {
   callback(this.value);
-  // recurse right or left through children
-  if (this.left) this.left.depthFirstLog(callback);
-  if (this.right) this.right.depthFirstLog(callback);
-};
+  if (this.left) {
+    this.left.depthFirstLog(callback);
+  }
+  if (this.right) {
+    this.right.depthFirstLog(callback);
+  }
+}
